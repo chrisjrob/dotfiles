@@ -56,3 +56,5 @@ nnoremap > >>
 nnoremap < <<
 vnoremap > >gv
 vnoremap < <gv
+
+nmap <silent> ./ :nohlsearch<CR>
