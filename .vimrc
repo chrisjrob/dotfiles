@@ -58,3 +58,9 @@ vnoremap > >gv
 vnoremap < <gv
 
 nmap <silent> ./ :nohlsearch<CR>
+
+" Macros
+" :reg s to display contents of macro s
+let @a = 'i\action{}{P1}{}^[hhhhhh'
+let @s = '{jV}k:sort'
+let @u = 'yypV:s/./-/g:noh'
