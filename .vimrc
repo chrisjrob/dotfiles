@@ -37,6 +37,8 @@ let g:table_mode_corner_corner="|"
 let g:table_mode_corner="|"
 
 let g:vimwiki_list = [{'path': "$HOME/Dropbox/Global/wiki", 'template_path': "$HOME/Dropbox/Global/wiki/templates", 'template_default': 'default', 'syntax': 'markdown', 'ext': '.md', 'path_html': "$HOME/Dropbox/Global/wiki_html", 'custom_wiki2html': 'vimwiki_markdown', 'template_ext': '.tpl'}]
+let g:vimwiki_table_mappings=0
+let g:vimwiki_table_auto_fmt=0
 
 "Twiddle case
 function! TwiddleCase(str)
@@ -62,5 +64,8 @@ nmap <silent> ./ :nohlsearch<CR>
 " Macros
 " :reg s to display contents of macro s
 let @a = 'i\action{}{P1}{}^[hhhhhh'
+let @c = 'cc\marginpar{Complete}'
+let @d = '|A \tiny{(Mmm-YY)}'
 let @s = '{jV}k:sort'
 let @u = 'yypV:s/./-/g:noh'
+
