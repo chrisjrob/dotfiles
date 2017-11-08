@@ -63,7 +63,7 @@ nmap <silent> ./ :nohlsearch<CR>
 
 " Macros
 " :reg s to display contents of macro s
-let @a = 'i\action{}{P1}{}^[hhhhhh'
+let @a = 'i\action{}{P1}{}hhhhhh'
 let @c = 'cc\marginpar{Complete}'
 let @d = '|A \tiny{(Mmm-YY)}'
 let @s = '{jV}k:sort'
