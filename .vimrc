@@ -20,6 +20,7 @@ set spell spelllang=en_gb
 set encoding=utf-8
 set fileencoding=utf-8
 set wrap linebreak textwidth=0
+set visualbell
 "set autochdir " or http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
 command! W w
 command! RandomLine execute 'normal! '.(system('sh -c "echo -n $RANDOM"') % line('$')).'G'
