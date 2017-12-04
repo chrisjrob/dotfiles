@@ -67,6 +67,6 @@ nmap <silent> ./ :nohlsearch<CR>
 let @a = 'i\action{}{P1}{}hhhhhh'
 let @c = 'cc\marginpar{Complete}'
 let @d = '|A \tiny{(Mmm-YY)}'
-let @s = '{jV}k:sort'
+let @s = '{jV}k:sort u'
 let @u = 'yypV:s/./-/g:noh'
 
