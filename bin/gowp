@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+# 
+# gowp - get old web photos
+# 
+
+system("scp calypso:/srv/rdiff-backup/trigarweb/var/www/web9/web/images/$ARGV[0] $ARGV[1]");
+
+
