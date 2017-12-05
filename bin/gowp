@@ -3,6 +3,19 @@
 # gowp - get old web photos
 # 
 
-system("scp calypso:/srv/rdiff-backup/trigarweb/var/www/web9/web/images/$ARGV[0] $ARGV[1]");
+my $host = "calypso:/srv/rdiff-backup/trigarweb/var/www/web9/web/images/";
+my $srce = $host . $ARGV[0];
+my $dest = $ARGV[1];
 
+if ($dest =~ /^.*\/(.*)\.md$/) {
+    $dest = 'public/images/news/' . $1 . '.jpg';
+}
+
+print "scp $srce $dest\n";
+system("scp", "$srce", "$dest");
+
+my $image = $dest;
+$image =~ s/^public//;
+
+system("echo \"$image\" | xclip -selection clipboard");
 
