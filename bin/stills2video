@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ $# -ne 2 ];then
+  echo "Usage: stills2video {framerate} {video.mpg}"
+  exit
+fi
+
+mkdir sequenced
+mkdir frames
+
+# Convert non-sequentially numbered stills into sequenced stills
+x=1;
+for i in *.jpg; do
+  counter=$(printf %03d $x)
+  ln "$i" sequenced/img"$counter".jpg
+  x=$(($x+1))
+done
+
+# Create padding stills for frame rate
+
+ffmpeg -i "sequenced/img%03d.jpg" -r $1 -f image2 "frames/%03d.jpg"
+ffmpeg -qscale 4 -i "frames/%03d.jpg" -s 640x480 -b 9000k $2
+
+rm -rf frames
+rm -rf sequenced

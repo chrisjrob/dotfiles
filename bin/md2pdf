@@ -1,0 +1,47 @@
+#!/usr/bin/perl
+# 
+# md2pdf
+
+use warnings;
+use strict;
+
+if (! defined $ARGV[0]) {
+    print "Please provide a filename to process.\n";
+    print "e.g. md2pdf sample.md\n";
+    exit;
+}
+
+# Set desired options
+my @options = ( '-V' => 'geometry:margin=1in',
+                '-V' => 'geometry:a4paper');
+                
+# Will accept % from vim
+my $markdownfile = $ARGV[0];
+
+# Accept any other command line input as options
+my $count = @ARGV;
+if ($count > 1) {
+    $count--;
+    push(@options, @ARGV[1 .. $count]);
+}
+
+# Output file as pdf
+my $pdffile = $markdownfile;
+$pdffile =~ s/\.(md|markdown)$//;
+$pdffile .= '.pdf';
+push(@options, ('-o', "$pdffile"));
+
+# Output command to be run to stdout
+my $options = join(' ', @options);
+print "pandoc $options $markdownfile\n";
+
+my $return = system('pandoc', @options, $markdownfile);
+
+# Provide feedback
+if ($return == 0) {
+    print "$pdffile created successfully\n";
+} else {
+    print "pandoc terminated with error $return\n";
+}
+
+exit;

@@ -1,0 +1,61 @@
+#!/bin/bash
+#
+# Best software I ever found to record GIF screencasts is Byzanz.
+# 
+# Byzanz is great because it records directly to GIF, the quality and FPS is 
+# impressive while maintaining the size of the files to a minimal.
+# 
+# Unfortunately support has been dropped and you can no longer find any 
+# packages for Ubuntu that wont break your system and have missing 
+# unsatisfiable dependencies.
+# 
+# Fortunately Debian still maintains the package for Sid and the GIT 
+# repository still exists.
+# 
+# If you want to go ahead and install the .deb file from Sid (works in 
+# Ubuntu 11.10, just tested, no warranties!), download it from the Debian 
+# packages page and install it with sudo dpkg -i.
+# 
+# Also, one of our esteemed moderators has ported the Debian package to 
+# a PPA making it easier to install, you can add it to your system and 
+# install Byzanz by opening a terminal and typing:
+# 
+# sudo add-apt-repository ppa:fossfreedom/byzanz
+# sudo apt-get update && sudo apt-get install byzanz
+# When its installed you can run it in a terminal.
+# 
+# Byzanz-record --duration=15 --x=200 --y=300 --width=700 --height=400 out.gif
+ 
+echo "Usage byzanz-record-window 20 ~/sample.gif"
+
+# Delay before starting
+DELAY=10
+ 
+# Sound notification to let one know when recording is about to start (and ends)
+beep() {
+    paplay /usr/share/sounds/gnome/default/alerts/drip.ogg &
+}
+ 
+# Duration and output file
+if [ $# -gt 0 ]; then
+    D="--duration=$@"
+else
+    echo Default recording duration 10s to /tmp/recorded.gif
+    D="--duration=10 /tmp/recorded.gif"
+fi
+XWININFO=$(xwininfo)
+read X < <(awk -F: '/Absolute upper-left X/{print $2}' <<< "$XWININFO")
+read Y < <(awk -F: '/Absolute upper-left Y/{print $2}' <<< "$XWININFO")
+read W < <(awk -F: '/Width/{print $2}' <<< "$XWININFO")
+read H < <(awk -F: '/Height/{print $2}' <<< "$XWININFO")
+ 
+echo Delaying $DELAY seconds. After that, byzanz will start
+for (( i=$DELAY; i>0; --i )) ; do
+    echo $i
+    sleep 1
+done
+ 
+beep
+byzanz-record --verbose --delay=0 --x=$X --y=$Y --width=$W --height=$H $D
+beep
+

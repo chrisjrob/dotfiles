@@ -1,0 +1,146 @@
+#!/usr/bin/perl
+#
+# csv
+#
+# csv - convert text to CSV fields
+
+use warnings;
+use strict;
+
+use Pod::Usage;
+use Getopt::Long;
+
+# Verbs
+my $help;
+my $columns;
+my $delim;
+
+# Options
+
+GetOptions(
+    "help"          => \$help,
+    "columns"       => \$columns,
+    "delim=s"       => \$delim,
+) or die("Error in command line arguments\n");
+
+if ( $help ) {
+    pod2usage( {
+            -exitval    => 1,  
+            -verbose    => 3,  
+    });
+
+} elsif ($columns) {
+    while (<>) {
+        columns($_);
+    }
+
+} elsif ($delim) {
+    while (<>) {
+        delim($_, $delim);
+    }
+
+} else {
+    pod2usage( {
+            -message    => "No valid options found",
+            -exitval    => 0,  
+            -verbose    => 1,  
+    });
+
+}
+
+exit;
+
+sub get_fields {
+    use Text::CSV;
+    my $csv = Text::CSV->new ({ binary => 1 });
+    my $status = $csv->parse($_);
+    my @fields = $csv->fields();
+    
+    return @fields;
+}
+
+sub delim {
+    my ($text, $delim) = @_;
+
+    my @fields = get_fields($text);
+
+    my $line = join($delim, @fields);
+
+    print "$line\n";
+}
+
+sub columns {
+    my $text = shift;
+
+    my @fields = get_fields($text);
+    my $count  = @fields;
+
+    my $i;
+
+    format STDOUT_TOP =
+  Line  Value
+------  ---------------------------------------------------------------
+.
+
+    format STDOUT = 
+@>>>>>  @*
+$i,     $fields[$i]
+.
+
+    for ($i=0;$i<$count;$i++) {
+        write; 
+    }
+
+}
+
+__END__
+
+=head1 CSV
+
+csv - convert text to CSV fields
+
+=head1 SYNOPSIS
+
+csv [OPTION] ... [FILE]
+
+=head1 OPTIONS
+
+=over 2
+
+=item B<--columns>
+
+Display fields vertically. Probably only useful for a 
+single line of text.
+
+=item B<--delim=DELIM>
+
+Outputs the fields delimited with DELIM delimiter. 
+Useful for converting comma delimited into pipe 
+delimited, for outputting to non-CSV aware utilities.
+
+=back
+
+=head1 DESCRIPTION
+
+B<csv> uses Text::CSV module to accurately convert comma delimited
+text into fields, which may then be displayed according to 
+options.
+
+=over 3
+
+=item B<csv --delim="|" input.csv>
+
+Convert file to pipe delimited.
+
+=item B<grep SOMETHING input.csv | csv --columns>
+
+Output matching content in columns.
+
+=item B<head -n 1 input.csv | csv --columns>
+
+List titles in column format.
+
+=back
+
+=cut
+

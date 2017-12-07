@@ -1,0 +1,52 @@
+#!/usr/bin/perl
+#
+# gitrename
+#
+# Like rename but for git files
+# very rough - not to be trusted
+
+use warnings;
+use strict;
+
+my $count = @ARGV;
+
+if ($count < 2) {
+    die "USAGE: gitrename s/from/to/ files";
+}
+
+my $regex = $ARGV[0];
+chomp($regex);
+
+my $delimiter = substr($regex,1,1);
+my @regex = split(/$delimiter/, $regex);
+
+my $regex_elements = @regex;
+if ($regex_elements < 3) {
+    die "Regex must be in format s/something/else/";
+} elsif ($regex_elements > 3) {
+    die "Regex cannot currently have any switches";
+}
+
+my $action = $regex[0];
+
+if ($action ne 's') {
+    die "Sorry only substitution regexes are supported";
+}
+
+my $search = $regex[1];
+my $replace = $regex[2];
+
+for (my $i=1;$i<$count;$i++) {
+    my $oldfilename = $ARGV[$i];
+    my $newfilename = $ARGV[$i];
+    chomp($oldfilename);
+    chomp($newfilename);
+
+    if ($newfilename =~ s/$search/$replace/) {
+        print "git mv $oldfilename $newfilename\n";
+        system('git', 'mv', $oldfilename, $newfilename);
+    } else {
+        print "No change for $oldfilename\n";
+    }
+
+}

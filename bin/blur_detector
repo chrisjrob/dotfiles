@@ -1,0 +1,99 @@
+#! /bin/bash
+
+#
+# Author: Pasquale Ceres (pasquale_c@hotmail.com)
+# License: GPL ver. 3
+#
+# Script originally developed for the 
+# "San Lorenzo Martire Caposele Church Records Digitalization Project"
+# 
+# http://www.facebook.com/group.php?gid=188973755117&v=photos
+# http://ars.altervista.org/PhpGedView/index.php
+#
+
+#
+# parameters
+#
+image_ext=JPG                    # image extension
+logfile=report.txt               # logfile with the list of all photos sorted by blur level
+logfile_full=report_unsorted.txt # logfile with the list of all photos not sorted
+temp_folder=/tmp                 # temporary folder
+output_folder=blurry_folder      # folder into which the most blurred photos are copied
+perc_output_images=20            # [%] percentage of most blurred images to be copied into output folder
+
+
+
+#
+# show usage if no params in input
+#
+if [ ! $# == 1 ]; then
+  echo "Usage:"
+  echo "$0 <filename> : analyse the single image, determining its blur factor"
+  echo "$0 <folder>   : analyse the images inside the folder"
+  exit
+fi
+
+
+#
+# calculations
+#
+input=$1
+
+if [ -d $input ]; then
+  # report on the files in the folder
+  #
+  # usage:
+  # blur_detector <folder_with_images>
+  #
+
+  echo "batch blur estimator..."
+  
+  touch $logfile_full
+  rm $logfile_full
+  find $input -name "*.$image_ext" -exec blur_detector {} >> $logfile_full \;
+  
+  
+  # sort by blur index (from worst to best)
+  cat $logfile_full | sort -d -k 8.2 > $logfile
+  
+ 
+  # copy blurred images to output folder
+  num_files=`cat $logfile | wc -l` # number of image files found
+  num_output_images=`echo $num_files*$perc_output_images/100.0 | bc | gawk '{printf("%d\n",int($1)+1)}'` # take a percentage
+
+  echo "copying $num_output_images (out of $num_files) blurriest photos into output folder..."
+
+  mkdir $output_folder
+  head $logfile -n $num_output_images | gawk '{n=split($1,a,"/");filename=sprintf("%03d_%s", FNR, a[n]);print filename; system("cp " $1 " ./'$output_folder'/" filename)}'  
+  
+else 
+  # report on single file
+  #
+  # usage:
+  # blur_detector <image_filename>
+  #
+
+  filename=$input
+
+  # original size
+  size0=`identify $filename | gawk '{print $3}'`
+
+  # reduce size, just take upper part of image
+  convert $filename -gravity north -crop 100x20% +repage $temp_folder/check0.jpg
+
+  size=`identify $temp_folder/check0.jpg | gawk '{print $3}'`
+
+  # create black image
+  convert -size $size xc:black $temp_folder/black.jpg
+
+  # create check image
+  convert -noise 2 -sigmoidal-contrast 6x25% -edge 2 $temp_folder/check0.jpg $temp_folder/check.jpg
+
+  # calculate blur factor
+  blur_value=`compare -metric RMSE $temp_folder/check.jpg $temp_folder/black.jpg $temp_folder/out.jpg 2>&1`
+
+  echo "$filename : $size0 -> $size : $blur_value"
+  
+  # remove work files
+  rm $temp_folder/check0.jpg $temp_folder/check.jpg $temp_folder/black.jpg $temp_folder/out.jpg
+fi
