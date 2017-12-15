@@ -60,6 +60,11 @@ nnoremap < <<
 vnoremap > >gv
 vnoremap < <gv
 
+"Recentre search match
+nnoremap n nzz
+nnoremap N nzz
+
+
 nmap <silent> ./ :nohlsearch<CR>
 
 " Macros
