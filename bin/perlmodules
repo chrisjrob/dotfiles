@@ -1,0 +1,66 @@
+#!/usr/bin/perl
+#
+# perlmodules
+#
+
+use strict;
+use ExtUtils::Installed;
+my $installed = ExtUtils::Installed->new();
+
+my $count = @ARGV;
+if ($count == 0) {
+    liststdin($installed);
+} elsif ($ARGV[0] eq '--help') {
+    usage();
+} elsif ($ARGV[0] eq '--all') {
+    listmodules($installed, $installed->modules());
+} else {
+    listmodules($installed, @ARGV);
+}
+
+exit;
+
+sub usage {
+    print <<"END";
+PERLMODULES
+===========
+
+    perlmodules --all
+    perlmodules "Text::CSV" "Text::CSV_XS"
+    echo "Text::CSV" "Text::CSV_XS" | perlmodules
+
+END
+
+}
+
+sub listargv {
+    my $installed   = shift;
+    my $argv        = shift;
+
+    print "Module\tVersion\n";
+    foreach (@{ $argv }) {
+        print $_ . "\t" . $installed->version($_) . "\n";
+    }
+
+}
+
+sub liststdin {
+    my $installed   = shift;
+    while (<>) {
+        chomp;
+        if ($_ eq 'all') {
+            listall($installed);
+            last;
+        }
+        print $_ . "\t" . $installed->version($_) . "\n";
+    }
+}
+
+sub listmodules {
+    my ($installed, @modules) = @_; 
+
+    print "Module\tVersion\n";
+    foreach (@modules) {
+        print $_ . "\t" . $installed->version($_) . "\n";
+    }
+}
