@@ -39,7 +39,7 @@ sub listargv {
 
     print "Module\tVersion\n";
     foreach (@{ $argv }) {
-        print $_ . "\t" . $installed->version($_) . "\n";
+        print $_ . ' => ' . $installed->version($_) . "\n";
     }
 
 }
@@ -52,7 +52,7 @@ sub liststdin {
             listall($installed);
             last;
         }
-        print $_ . "\t" . $installed->version($_) . "\n";
+        print $_ . ' => ' . $installed->version($_) . "\n";
     }
 }
 
@@ -61,6 +61,6 @@ sub listmodules {
 
     print "Module\tVersion\n";
     foreach (@modules) {
-        print $_ . "\t" . $installed->version($_) . "\n";
+        print $_ . ' => ' . $installed->version($_) . "\n";
     }
 }
