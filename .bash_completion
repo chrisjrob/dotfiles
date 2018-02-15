@@ -1,0 +1,11 @@
+# Custom bash completion
+_webupdate()
+{
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "--add --campaign --feedback --file --find --id --increment --title" -- $cur) )
+}
+
+complete -o default -F _webupdate ./webupdate
+complete -o default -F _webupdate webupdate
+
+
