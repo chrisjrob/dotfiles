@@ -74,4 +74,4 @@ let @c = 'cc\marginpar{Complete}'
 let @d = '|A \tiny{(Mmm-YY)}'
 let @s = '{jV}k:sort u'
 let @u = 'yypV:s/./-/g:noh'
-
+let @l = '/Todayj:r ~/Dropbox/Global/wiki/DailyTasks.md'
