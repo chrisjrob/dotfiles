@@ -16,7 +16,10 @@
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 
+% Heading formats
+
 \usepackage{titlesec}
+
 \titlespacing{\section}{0pt}{*2}{*1}
 \titlespacing{\subsection}{0pt}{*1}{-0.2\parskip}
 \titlespacing{\subsubsection}{0pt}{*1}{-0.5\parskip}
