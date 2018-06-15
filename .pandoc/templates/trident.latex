@@ -72,6 +72,9 @@ $endif$
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
+% Editor comments
+\newcommand{\editor}[1]{\footnotesize{}\emph{Edit: #1}\normalsize}
+
 % Links and references
 
 %\usepackage[unicode=true]{hyperref}
