@@ -7,6 +7,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{eurosym}
+\usepackage[usenames, dvipsnames]{color}
 \usepackage{enumitem}
 \setenumerate{itemsep=2pt,topsep=2pt}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -19,6 +20,10 @@
 \titlespacing{\section}{0pt}{*2}{*1}
 \titlespacing{\subsection}{0pt}{*1}{-0.2\parskip}
 \titlespacing{\subsubsection}{0pt}{*1}{-0.5\parskip}
+
+\titleformat{\section}{\color{MidnightBlue}\normalfont\Large\bfseries}{\color{MidnightBlue}\thesection}{1em}{}
+\titleformat{\subsection}{\color{CadetBlue}\normalfont\large\bfseries}{\color{CadetBlue}\thesection}{1em}{}
+\titleformat{\subsubsection}{\color{black}\normalfont\normalsize\bfseries}{\color{black}\thesection}{1em}{}
 
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
