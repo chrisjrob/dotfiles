@@ -81,3 +81,13 @@ let @d = '|A \tiny{(Mmm-YY)}'
 let @s = '{jV}k:sort u'
 let @u = 'yypV:s/./-/g:noh'
 let @l = '/Todayj:r ~/Dropbox/Global/wiki/DailyTasks.md'
+
+" Note of .vim/bundle repositories
+" git@github.com/godlygeek/tabular.git
+" git@github.com:arecarn/vim-crunch.git
+" git@github.com:arecarn/vim-selection.git
+" git@github.com:dhruvasagar/vim-table-mode.git
+" git@github.com:plasticboy/vim-markdown.git
+" git@github.com:vim-scripts/loremipsum.git
+" git@github.com:vimwiki/vimwiki.git
+
