@@ -124,6 +124,21 @@ $endif$
 \setlength{\marginparwidth}{0.9in}
 \renewcommand{\familydefault}{\sfdefault}
 
+% Option for even 1in margins
+$if(even)$
+\setlength{\marginparwidth}{0in}
+\setlength{\textwidth}{6.3in}
+$endif$
+
+% Option for narrow 0.5in margins
+$if(narrow)$
+\setlength{\marginparwidth}{0in}
+\setlength{\textwidth}{7.3in}
+\setlength{\hoffset}{-0.5in}
+\setlength{\voffset}{-0.5in}
+\setlength{\textheight}{10.7in}
+$endif$
+
 % To-do list
 \definecolor{P1}{RGB}{255,155,155}
 \definecolor{P2}{RGB}{255,183,115}
