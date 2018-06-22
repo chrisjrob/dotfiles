@@ -1,0 +1,212 @@
+\documentclass[11pt,a4paper]{article}
+\pagestyle{plain}
+\usepackage[british]{babel}
+\usepackage[en-GB]{datetime2}
+\usepackage{lmodern}
+\usepackage{calc}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{eurosym}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{enumitem}
+\setenumerate{itemsep=2pt,topsep=2pt}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+
+% Heading formats
+
+\usepackage{titlesec}
+
+\titlespacing{\section}{0pt}{*2}{*1}
+\titlespacing{\subsection}{0pt}{*1}{-0.2\parskip}
+\titlespacing{\subsubsection}{0pt}{*1}{-0.5\parskip}
+
+\titleformat{\section}{\color{MidnightBlue}\normalfont\Large\bfseries}{\color{MidnightBlue}\thesection}{1em}{}
+\titleformat{\subsection}{\color{CadetBlue}\normalfont\large\bfseries}{\color{CadetBlue}\thesection}{1em}{}
+\titleformat{\subsubsection}{\color{black}\normalfont\normalsize\bfseries}{\color{black}\thesection}{1em}{}
+
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+
+$if(listings)$
+\usepackage{listings}
+$endif$
+
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+
+$if(tables)$
+\usepackage{longtable,booktabs}
+$endif$
+
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\def\maketitle{%
+  \begin{centering}
+      \includegraphics[width=0.4\textwidth]{/home/cjr/.pandoc/templates/sanddollar.png}
+    \vskip 0.2cm
+    {\LARGE \@title\par}%
+    %{\normalsize \@author\par}%
+    {\large \@author\par}%
+    \normalfont
+    {\normalsize \@date\par}%
+    \vskip 0.5cm
+	\end{centering}%
+  }
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Editor comments
+\newcommand{\editor}[1]{\footnotesize{}\emph{Edit: #1}\normalsize}
+
+% Links and references
+
+%\usepackage[unicode=true]{hyperref}
+\usepackage{embedfile}
+\usepackage{hypgotoe}
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={$author-meta$},
+            pdftitle={$title-meta$},
+            colorlinks=true,
+            citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$blue$endif$,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\newcommand*{\embedlinkfile}[2]{\embedfile{#1}\href{gotoe:embedded=#1}{#2}}
+\newcommand*{\linkfile}[2]{\href{gotoe:embedded=#1}{#2}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+
+\usepackage[colorinlistoftodos]{todonotes}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.0in}
+\setlength{\footskip}{18pt}
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\marginparwidth}{0.9in}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Option for even 1in margins
+$if(even)$
+\setlength{\marginparwidth}{0in}
+\setlength{\textwidth}{6.3in}
+$endif$
+
+% Option for narrow 0.5in margins
+$if(narrow)$
+\setlength{\marginparwidth}{0in}
+\setlength{\textwidth}{7.3in}
+\setlength{\hoffset}{-0.5in}
+\setlength{\voffset}{-0.5in}
+\setlength{\textheight}{10.7in}
+$endif$
+
+% To-do list
+\definecolor{P1}{RGB}{255,155,155}
+\definecolor{P2}{RGB}{255,183,115}
+\definecolor{P3}{RGB}{215,215,105}
+\definecolor{Complete}{RGB}{104,230,103}
+\newcommand{\action}[3]{\todo[color=#2,size=\tiny]{\emph{#1}: #3}}
+
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+
+$if(lang)$
+\ifxetex
+  \usepackage{polyglossia}
+  \setmainlanguage{$mainlang$}
+\else
+  \usepackage[$lang$]{babel}
+\fi
+$endif$
+
+$if(title)$
+\title{$title$$if(subtitle)$\\\vspace{0.5em}{\large $subtitle$}$endif$}
+$endif$
+$if(author)$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+\date{$date$}
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+\begin{document}
+$if(title)$
+\maketitle
+$endif$
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+$body$
+
+$if(todo)$
+\newpage
+\listoftodos[Action List]
+$endif$
+\end{document}
