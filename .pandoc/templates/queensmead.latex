@@ -77,6 +77,19 @@ $endif$
 % Editor comments
 \newcommand{\editor}[1]{\footnotesize{}\emph{Edit: #1}\normalsize}
 
+% Quotation formatting
+
+\renewenvironment{quote}{%
+	\list{}{%
+		\small
+		\itshape
+		\leftmargin0.5cm   % this is the adjusting screw
+		\rightmargin\leftmargin
+	}
+	\item\relax
+}
+{\endlist}
+
 % Links and references
 
 %\usepackage[unicode=true]{hyperref}
