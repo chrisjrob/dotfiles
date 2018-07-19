@@ -82,6 +82,7 @@ $endif$
 
 \renewenvironment{quote}{%
 	\list{}{%
+                \setlength{\topsep}{0pt}
 		\small
 		\itshape
 		\leftmargin0.5cm   % this is the adjusting screw
