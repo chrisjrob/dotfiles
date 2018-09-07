@@ -24,7 +24,7 @@ set visualbell
 "set autochdir " or http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
 command! W w
 command! RandomLine execute 'normal! '.(system('sh -c "echo -n $RANDOM"') % line('$')).'G'
-com! FormatJSON %!python -m json.tool
+command! FormatJSON %!python -m json.tool
 
 " Vim Markdown Support with Folding
 set nocompatible
@@ -81,6 +81,7 @@ let @d = '|A \tiny{(Mmm-YY)}'
 let @s = '{jV}k:sort u'
 let @u = 'yypV:s/./-/g:noh'
 let @l = '/Todayj:r ~/Dropbox/Global/wiki/DailyTasks.md'
+let @t = '::s#\v(\w)(\S*)#\u\1\L\2#g^M./'
 
 " Note of .vim/bundle repositories
 " git@github.com:arecarn/vim-crunch.git
