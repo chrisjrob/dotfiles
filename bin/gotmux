@@ -26,8 +26,14 @@ tmux rename-window -t $TOPRIGHT:0 'tr'
 # Run Vim
 tmux send-keys 'vim' C-m
 tmux send-keys '\ww'
+tmux send-keys ':VimwikiGoto Tasks' C-m
 tmux send-keys ':set nospell' C-m
 tmux send-keys ':set nowrap' C-m
+tmux send-keys '@l' C-m
+tmux send-keys '@s' C-m
+tmux send-keys 'gg/Today' C-m
+tmux send-keys ':noh' C-m
+tmux send-keys 'z' C-m
 
 BOTTOMLEFT="${SESSION}-bl"
 
