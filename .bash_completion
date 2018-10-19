@@ -2,7 +2,7 @@
 _webupdate()
 {
     local cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $(compgen -W "--add --campaign --draft --edit --expired --feedback --file --find --id --increment --title --verbose --text" -- $cur) )
+    COMPREPLY=( $(compgen -W "--add --campaign --check --draft --edit --expired --feedback --file --find --id --increment --title --verbose --text" -- $cur) )
 }
 
 complete -o default -F _webupdate ./webupdate
