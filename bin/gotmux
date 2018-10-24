@@ -1,5 +1,9 @@
 #!/bin/bash
 SESSION=$USER
+TOPLEFT="${SESSION}-tl"
+TOPRIGHT="${SESSION}-tr"
+BOTTOMLEFT="${SESSION}-bl"
+BOTTOMRIGHT="${SESSION}-br"
 
 ####################################################
 #                                                  #
@@ -7,54 +11,49 @@ SESSION=$USER
 #                                                  #
 ####################################################
 
-TOPLEFT="${SESSION}-tl"
+function create_subsessions {
 
-# Create top-left session and embed in top-left window
-tmux -2 new-session -d -s $TOPLEFT
+    # Create top-left session and embed in top-left window
+    tmux -2 new-session -d -s $TOPLEFT
 
-# Rename main window
-tmux rename-window -t $TOPLEFT:0 'tl'
+    # Rename main window
+    tmux rename-window -t $TOPLEFT:0 'tl'
 
-TOPRIGHT="${SESSION}-tr"
+    # Create top-left session and embed in top-left window
+    tmux -2 new-session -d -s $TOPRIGHT
 
-# Create top-left session and embed in top-left window
-tmux -2 new-session -d -s $TOPRIGHT
+    # Rename main window
+    tmux rename-window -t $TOPRIGHT:0 'tr'
 
-# Rename main window
-tmux rename-window -t $TOPRIGHT:0 'tr'
+    # Run Vim
+    tmux send-keys 'vim' C-m
+    tmux send-keys '\ww'
+    tmux send-keys ':VimwikiGoto Tasks' C-m
+    tmux send-keys ':set nospell' C-m
+    tmux send-keys ':set nowrap' C-m
+    tmux send-keys '@l' C-m
+    tmux send-keys '@s' C-m
+    tmux send-keys 'gg/Today' C-m
+    tmux send-keys ':noh' C-m
+    tmux send-keys 'z' C-m
 
-# Run Vim
-tmux send-keys 'vim' C-m
-tmux send-keys '\ww'
-tmux send-keys ':VimwikiGoto Tasks' C-m
-tmux send-keys ':set nospell' C-m
-tmux send-keys ':set nowrap' C-m
-tmux send-keys '@l' C-m
-tmux send-keys '@s' C-m
-tmux send-keys 'gg/Today' C-m
-tmux send-keys ':noh' C-m
-tmux send-keys 'z' C-m
+    # Create top-left session and embed in top-left window
+    tmux -2 new-session -d -s $BOTTOMLEFT
 
-BOTTOMLEFT="${SESSION}-bl"
+    # Rename main window
+    tmux rename-window -t $BOTTOMLEFT:0 'bl'
 
-# Create top-left session and embed in top-left window
-tmux -2 new-session -d -s $BOTTOMLEFT
+    # Create top-left session and embed in top-left window
+    tmux -2 new-session -d -s $BOTTOMRIGHT
 
-# Rename main window
-tmux rename-window -t $BOTTOMLEFT:0 'bl'
+    # Rename main window
+    tmux rename-window -t $BOTTOMRIGHT:0 'br'
 
-BOTTOMRIGHT="${SESSION}-br"
-
-# Create top-left session and embed in top-left window
-tmux -2 new-session -d -s $BOTTOMRIGHT
-
-# Rename main window
-tmux rename-window -t $BOTTOMRIGHT:0 'br'
-
-# Run ssh
-tmux send-keys 'ssh trigarbit' C-m
-sleep 2
-tmux send-keys 'tmux attach -d' C-m
+    # Run ssh
+    tmux send-keys 'ssh trigarbit' C-m
+    sleep 2
+    tmux send-keys 'tmux attach -d' C-m
+}
 
 ####################################################
 #                                                  #
@@ -62,30 +61,33 @@ tmux send-keys 'tmux attach -d' C-m
 #                                                  #
 ####################################################
 
-# Create main tmux session
-tmux -2 new-session -d -s $SESSION
+function create_mainsession {
+    # Create main tmux session
+    tmux -2 new-session -d -s $SESSION
 
-# Rename main window
-tmux rename-window -t $SESSION:0 'master'
+    # Rename main window
+    tmux rename-window -t $SESSION:0 'master'
 
-# Split vertically
-tmux split-window -v -t $SESSION:0
+    # Split vertically
+    tmux split-window -v -t $SESSION:0
 
-# Reduce height of lower pane
-tmux resize-pane -t $SESSION:0.1 -y 23
+    # Reduce height of lower pane
+    tmux resize-pane -t $SESSION:0.1 -y 23
 
-# Select top half and split horizontally
-tmux select-pane -t 0
-tmux split-window -h
+    # Select top half and split horizontally
+    tmux select-pane -t 0
+    tmux split-window -h
 
-# Select bottom half and split horizontally
-tmux select-pane -t 2
-tmux split-window -h
+    # Select bottom half and split horizontally
+    tmux select-pane -t 2
+    tmux split-window -h
 
-# Windows should now look like
-# 0 | 1
-# -----
-# 2 | 3
+    # Windows should now look like
+    # 0 | 1
+    # -----
+    # 2 | 3
+
+}
 
 ####################################################
 #                                                  #
@@ -93,33 +95,36 @@ tmux split-window -h
 #                                                  #
 ####################################################
 
-# Select top left pane
-tmux select-pane -t $SESSION:0.0
+function attach_subsessions {
 
-# Create embedded tmux session
-tmux send-keys 'tmux attach -t ' $TOPLEFT C-m
+    # Select top left pane
+    tmux select-pane -t $SESSION:0.0
 
-# Select top right pane
-tmux select-pane -t $SESSION:0.1
+    # Create embedded tmux session
+    tmux send-keys 'tmux attach -t ' $TOPLEFT C-m
 
-# Create embedded tmux session
-tmux send-keys 'tmux attach -t ' $TOPRIGHT C-m
+    # Select top right pane
+    tmux select-pane -t $SESSION:0.1
 
-# Select bottom left pane
-tmux select-pane -t $SESSION:0.2
+    # Create embedded tmux session
+    tmux send-keys 'tmux attach -t ' $TOPRIGHT C-m
 
-# Create embedded tmux session
-tmux send-keys 'tmux attach -t ' $BOTTOMLEFT C-m
+    # Select bottom left pane
+    tmux select-pane -t $SESSION:0.2
 
-# Select bottom right pane
-tmux select-pane -t $SESSION:0.3
+    # Create embedded tmux session
+    tmux send-keys 'tmux attach -t ' $BOTTOMLEFT C-m
 
-# Create embedded tmux session
-tmux send-keys 'tmux attach -t ' $BOTTOMRIGHT C-m
+    # Select bottom right pane
+    tmux select-pane -t $SESSION:0.3
 
-# Reduce width of top right pane
-tmux resize-pane -t $SESSION:0.1 -x 53
+    # Create embedded tmux session
+    tmux send-keys 'tmux attach -t ' $BOTTOMRIGHT C-m
 
+    # Reduce width of top right pane
+    tmux resize-pane -t $SESSION:0.1 -x 53
+
+}
 
 ####################################################
 #                                                  #
@@ -127,6 +132,68 @@ tmux resize-pane -t $SESSION:0.1 -x 53
 #                                                  #
 ####################################################
 
-tmux -2 attach-session -t $SESSION
+function attach_mainsession {
+    tmux -2 attach-session -t $SESSION
+}
+
+####################################################
+#                                                  #
+#                Website session                   #
+#                                                  #
+####################################################
+
+function perl_dancer {
+    # Select top left pane
+    tmux select-pane -t $TOPLEFT:0.0
+
+    # Set current directory
+    cd $DIR
+
+    # Create new window
+    tmux new-window -t $TOPLEFT -n "${NAME}-perl" -c $DIR
+
+    # Run website
+    tmux send-keys -t "$TOPLEFT:${NAME}-perl" 'perl bin/app-devel.pl' C-m
+
+    # Create new editing windows
+    tmux new-window -t $TOPLEFT -n "${NAME}-1" -c $DIR
+    tmux new-window -t $TOPLEFT -n "${NAME}-2" -c $DIR
+
+    # Select tw-1 as current window
+    tmux select-window -t "$TOPLEFT:${NAME}-1"
+}
+
+
+
+####################################################
+#                                                  #
+#                Run Main Program                  #
+#                                                  #
+####################################################
+
+case "$1" in
+
+    tridentweb )
+        DIR="/home/cjr/gits/dancer/tridentweb"
+        NAME="tw"
+        perl_dancer
+    ;;
+
+    stocklist )
+        DIR="/home/cjr/gits/dancer/stocklist"
+        NAME="sl"
+        perl_dancer
+
+    ;;
+
+    *)
+        create_subsessions
+        create_mainsession
+        attach_subsessions
+        attach_mainsession
+    ;;
+
+esac
+
 
 
