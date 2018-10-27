@@ -144,7 +144,8 @@ function attach_mainsession {
 
 function perl_dancer {
     # Select top left pane
-    tmux select-pane -t $TOPLEFT:0.0
+    tmux select-window -t "$TOPLEFT:0"
+    tmux select-pane -t "$TOPLEFT:0.0"
 
     # Set current directory
     cd $DIR
@@ -163,7 +164,25 @@ function perl_dancer {
     tmux select-window -t "$TOPLEFT:${NAME}-1"
 }
 
+####################################################
+#                                                  #
+#                Kill dancer session               #
+#                                                  #
+####################################################
 
+function kill_dancer {
+    PID=$(ps -C perl -o "pid=")
+    CMD=$(ps -p $PID -o "cmd=")
+
+    if [ "$CMD" = "perl bin/app-devel.pl" ]; then
+        kill $PID
+        tmux select-window -t "$TOPLEFT:0"
+        tmux select-pane -t "$TOPLEFT:0.0"
+        tmux kill-window -a -t "$TOPLEFT:0.0"
+    fi
+
+    return
+}
 
 ####################################################
 #                                                  #
@@ -173,17 +192,26 @@ function perl_dancer {
 
 case "$1" in
 
+    killdancer )
+        kill_dancer
+    ;;
+
     tridentweb )
+        kill_dancer
+
         DIR="/home/cjr/gits/dancer/tridentweb"
         NAME="tw"
+
         perl_dancer
     ;;
 
     stocklist )
+        kill_dancer
+
         DIR="/home/cjr/gits/dancer/stocklist"
         NAME="sl"
-        perl_dancer
 
+        perl_dancer
     ;;
 
     *)
