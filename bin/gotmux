@@ -162,6 +162,7 @@ function perl_dancer {
 
     # Select tw-1 as current window
     tmux select-window -t "$TOPLEFT:${NAME}-1"
+    tmux send-keys -t "$TOPLEFT:${NAME}-1" 'git pull' C-m
 }
 
 ####################################################
