@@ -28,6 +28,10 @@
 \titleformat{\subsection}{\color{CadetBlue}\normalfont\large\bfseries}{\color{CadetBlue}\thesection}{1em}{}
 \titleformat{\subsubsection}{\color{black}\normalfont\normalsize\bfseries}{\color{black}\thesection}{1em}{}
 
+$if(pagebreaks)$
+\newcommand{\sectionbreak}{\clearpage}
+$endif$
+
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
