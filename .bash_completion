@@ -1,4 +1,9 @@
 # Custom bash completion
+_gotmux()
+{
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "tridentweb stocklist killdancer" -- $cur) )
+}
 _webupdate()
 {
     local cur=${COMP_WORDS[COMP_CWORD]}
@@ -7,5 +12,6 @@ _webupdate()
 
 complete -o default -F _webupdate ./webupdate
 complete -o default -F _webupdate webupdate
+complete -o default -F _gotmux gotmux
 
 
