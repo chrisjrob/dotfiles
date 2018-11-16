@@ -78,6 +78,7 @@ nmap <silent> ./ :nohlsearch<CR>
 let @a = 'i\action{}{P1}{}hhhhhh'
 let @c = 'cc\marginpar{Complete}'
 let @d = '|A \tiny{(Mmm-YY)}'
+let @f = ':%s/[\xa0]/ /g:%s/[u2013]/-/g:%s/[u2018u2019]/^Vu0027/g:%s/[u201cu201d]/^Vu0022/g'
 let @s = '{jV}k:sort u'
 let @u = 'yypV:s/./-/g:noh'
 let @l = '/Todayj:r ~/Dropbox/Global/wiki/DailyTasks.md'
