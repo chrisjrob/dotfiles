@@ -1,4 +1,5 @@
 alias gb="gitmakebranch"
+alias gl="gitbranches"
 alias gc="git commit"
 alias gp="git push"
 alias gd="git diff"
