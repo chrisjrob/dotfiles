@@ -1,0 +1,15 @@
+#!/bin/bash
+
+BRAN="$1"
+DESC="$2"
+
+
+if [ $# -eq 2 ];then
+    git checkout -b "$BRAN"
+    git config branch.$BRAN.description "$DESC"
+    exit
+fi
+
+echo "USAGE gitmakebranch branchname \"branch description\""
+
+
