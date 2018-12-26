@@ -41,6 +41,13 @@ let g:vimwiki_list = [{'path': "$HOME/Dropbox/Global/wiki", 'template_path': "$H
 let g:vimwiki_table_mappings=0
 let g:vimwiki_table_auto_fmt=0
 
+"Rebuild Spell files
+for d in glob('~/.vim/spell/*.add', 1, 1)
+    if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+        exec 'mkspell! ' . fnameescape(d)
+    endif
+endfor
+
 "Twiddle case
 function! TwiddleCase(str)
     if a:str ==# toupper(a:str)
