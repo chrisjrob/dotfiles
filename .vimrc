@@ -77,19 +77,38 @@ set undodir=$HOME/.vim/undo " where to save undo histories
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
 
-"Shortcut for clear search
+" Shortcut for clear search
 nmap <silent> ./ :nohlsearch<CR>
 
 " Macros
 " :reg s to display contents of macro s
+
+" minutes - add latex action command to document at cursor
 let @a = 'i\action{}{P1}{}hhhhhh'
+
+" minutes - replace current line with action complete
 let @c = 'cc\marginpar{Complete}'
-let @d = '|A \tiny{(Mmm-YY)}'
-let @f = ':%s/[\xa0]/ /g:%s/[u2013]/-/g:%s/[u2018u2019]/^Vu0027/g:%s/[u201cu201d]/^Vu0022/g'
+
+" minutes - add date stamp
+let @d = '|A \tiny{(' . strftime("%b") . '-' . strftime("%y") . ')}'
+
+" fix smart characters: –‘’“”
+let @f = ':%s:[\xa0]: :ge | %s:[u2013]:-:ge | %s:[u2018u2019]:u0027:ge | %s:[u201cu201d]:u0022:ge'
+
+" sort unique
 let @s = '{jV}k:sort u'
+
+" underline current line
 let @u = 'yypV:s/./-/g:noh'
+
+" load daily tasks
 let @l = '/Todayj:r ~/Dropbox/Global/wiki/DailyTasks.md'
-let @t = '::s#\v(\w)(\S*)#\u\1\L\2#g^M./'
+
+" propercase (titlecase)
+let @p = ':s:\v(\w)(\S*):\u\1\L\2:g:noh'
+
+" convert tabs into table
+let @t = ':s/\v(^|\t|$)/\|/g:noh'
 
 " Note of .vim/bundle repositories
 " git@github.com:arecarn/vim-crunch.git
