@@ -90,16 +90,13 @@ let @a = 'i\action{}{P1}{}hhhhhh'
 let @c = 'cc\marginpar{Complete}'
 
 " minutes - add date stamp
-let @d = '|A \tiny{(' . strftime("%b") . '-' . strftime("%y") . ')}'
+let @d = '|A \tiny{(' . strftime("%b-%y") . ')}'
 
 " fix smart characters: –‘’“”
 let @f = ':%s:[\xa0]: :ge | %s:[u2013]:-:ge | %s:[u2018u2019]:u0027:ge | %s:[u201cu201d]:u0022:ge'
 
-" sort unique
-let @s = '{jV}k:sort u'
-
-" underline current line
-let @u = 'yypV:s/./-/g:noh'
+" Date stamp
+let @i = '|A' . strftime("%e %B %Y") . ''
 
 " load daily tasks
 let @l = '/Todayj:r ~/Dropbox/Global/wiki/DailyTasks.md'
@@ -109,6 +106,12 @@ let @p = ':s:\v(\w)(\S*):\u\1\L\2:g:noh'
 
 " convert tabs into table
 let @t = ':s/\v(^|\t|$)/\|/g:noh'
+" sort unique
+let @s = '{jV}k:sort u'
+
+" underline current line
+let @u = 'yypV:s/./-/g:noh'
+
 
 " Note of .vim/bundle repositories
 " git@github.com:arecarn/vim-crunch.git
