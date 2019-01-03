@@ -172,7 +172,7 @@ function perl_dancer {
 #                                                  #
 ####################################################
 
-function perl_dancer2 {
+function perl_dancer_new {
     # Select top left pane
     tmux select-window -t "$TOPLEFT:0"
     tmux select-pane -t "$TOPLEFT:0.0"
@@ -202,7 +202,7 @@ function perl_dancer2 {
 #                                                  #
 ####################################################
 
-function kill_dancer {
+function kill_dancer_old {
     PID=$(ps -C perl -o "pid=")
 
     if [ -z "$PID" ]; then
@@ -227,7 +227,7 @@ function kill_dancer {
 #                                                  #
 ####################################################
 
-function kill_dancer2 {
+function kill_dancer_new {
     PID=$(ps -C plackup -o "pid=")
 
     if [ -z "$PID" ]; then
@@ -255,13 +255,13 @@ function kill_dancer2 {
 case "$1" in
 
     killdancer )
-        kill_dancer
-        kill_dancer2
+        kill_dancer_old
+        kill_dancer_new
     ;;
 
     tridentweb )
-        kill_dancer
-        kill_dancer2
+        kill_dancer_old
+        kill_dancer_new
 
         DIR="/home/cjr/gits/dancer/tridentweb"
         NAME="tw"
@@ -270,8 +270,8 @@ case "$1" in
     ;;
 
     stocklist )
-        kill_dancer
-        kill_dancer2
+        kill_dancer_old
+        kill_dancer_new
 
         DIR="/home/cjr/gits/dancer/stocklist"
         NAME="sl"
@@ -280,23 +280,23 @@ case "$1" in
     ;;
 
     salesmanager2 )
-        kill_dancer
-        kill_dancer2
+        kill_dancer_old
+        kill_dancer_new
 
         DIR="/home/cjr/gits/dancer2/salesmanager2"
         NAME="sm"
 
-        perl_dancer2
+        perl_dancer_new
     ;;
 
     shortener )
-        kill_dancer
-        kill_dancer2
+        kill_dancer_old
+        kill_dancer_new
 
         DIR="/home/cjr/gits/dancer2/shortener"
         NAME="sh"
 
-        perl_dancer2
+        perl_dancer_new
     ;;
 
     *)
