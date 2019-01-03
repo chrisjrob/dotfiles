@@ -184,7 +184,7 @@ function perl_dancer_new {
     tmux new-window -t $TOPLEFT -n "${NAME}-plackup" -c $DIR
 
     # Run website
-    tmux send-keys -t "$TOPLEFT:${NAME}-plackup" '/usr/bin/perl /usr/bin/plackup -r bin/app.psgi -R config.yml' C-m
+    tmux send-keys -t "$TOPLEFT:${NAME}-plackup" '/usr/bin/perl /usr/bin/plackup -r bin/app.psgi -R config.yml -R lib/' C-m
 
     # Create new editing windows
     tmux new-window -t $TOPLEFT -n "${NAME}-1" -c $DIR
@@ -216,7 +216,7 @@ function kill_dancer {
         tmux select-window -t "$TOPLEFT:0"
         tmux select-pane -t "$TOPLEFT:0.0"
         tmux kill-window -a -t "$TOPLEFT:0.0"
-    elif [ "$CMD" = "/usr/bin/perl /usr/bin/plackup -r bin/app.psgi -R config.yml" ]; then
+    elif [ "$CMD" = "/usr/bin/perl /usr/bin/plackup -r bin/app.psgi -R config.yml -R lib/" ]; then
         kill $PID
         tmux select-window -t "$TOPLEFT:0"
         tmux select-pane -t "$TOPLEFT:0.0"
