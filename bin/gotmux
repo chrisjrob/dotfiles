@@ -202,7 +202,7 @@ function perl_dancer_new {
 #                                                  #
 ####################################################
 
-function kill_dancer_old {
+function kill_dancer {
     PID=$(ps -C perl -o "pid=")
 
     if [ -z "$PID" ]; then
@@ -216,27 +216,7 @@ function kill_dancer_old {
         tmux select-window -t "$TOPLEFT:0"
         tmux select-pane -t "$TOPLEFT:0.0"
         tmux kill-window -a -t "$TOPLEFT:0.0"
-    fi
-
-    return
-}
-
-####################################################
-#                                                  #
-#                Kill dancer2 session              #
-#                                                  #
-####################################################
-
-function kill_dancer_new {
-    PID=$(ps -C plackup -o "pid=")
-
-    if [ -z "$PID" ]; then
-        return
-    fi
-
-    CMD=$(ps -p $PID -o "cmd=")
-
-    if [ "$CMD" = "/usr/bin/perl /usr/bin/plackup -r bin/app.psgi -R config.yml" ]; then
+    elif [ "$CMD" = "/usr/bin/perl /usr/bin/plackup -r bin/app.psgi -R config.yml" ]; then
         kill $PID
         tmux select-window -t "$TOPLEFT:0"
         tmux select-pane -t "$TOPLEFT:0.0"
@@ -255,13 +235,11 @@ function kill_dancer_new {
 case "$1" in
 
     killdancer )
-        kill_dancer_old
-        kill_dancer_new
+        kill_dancer
     ;;
 
     tridentweb )
-        kill_dancer_old
-        kill_dancer_new
+        kill_dancer
 
         DIR="/home/cjr/gits/dancer/tridentweb"
         NAME="tw"
@@ -270,8 +248,7 @@ case "$1" in
     ;;
 
     stocklist )
-        kill_dancer_old
-        kill_dancer_new
+        kill_dancer
 
         DIR="/home/cjr/gits/dancer/stocklist"
         NAME="sl"
@@ -280,8 +257,7 @@ case "$1" in
     ;;
 
     salesmanager2 )
-        kill_dancer_old
-        kill_dancer_new
+        kill_dancer
 
         DIR="/home/cjr/gits/dancer2/salesmanager2"
         NAME="sm"
@@ -290,8 +266,7 @@ case "$1" in
     ;;
 
     shortener )
-        kill_dancer_old
-        kill_dancer_new
+        kill_dancer
 
         DIR="/home/cjr/gits/dancer2/shortener"
         NAME="sh"
