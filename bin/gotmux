@@ -221,6 +221,24 @@ case "$1" in
         perl_dancer
     ;;
 
+    salesmanager2 )
+        kill_dancer
+
+        DIR="/home/cjr/gits/dancer2/salesmanager2"
+        NAME="sm"
+
+        perl_dancer
+    ;;
+
+    shortener )
+        kill_dancer
+
+        DIR="/home/cjr/gits/dancer2/shortener"
+        NAME="sh"
+
+        perl_dancer
+    ;;
+
     *)
         create_subsessions
         create_mainsession
