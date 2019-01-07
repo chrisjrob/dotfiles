@@ -256,6 +256,15 @@ case "$1" in
         perl_dancer
     ;;
 
+    budgets )
+        kill_dancer
+
+        DIR="/home/cjr/gits/dancer/budgets"
+        NAME="bu"
+
+        perl_dancer
+    ;;
+
     salesmanager2 )
         kill_dancer
 

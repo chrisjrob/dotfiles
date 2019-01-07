@@ -2,7 +2,7 @@
 _gotmux()
 {
     local cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $(compgen -W "tridentweb stocklist salesmanager2 shortener killdancer" -- $cur) )
+    COMPREPLY=( $(compgen -W "tridentweb stocklist budgets salesmanager2 shortener killdancer" -- $cur) )
 }
 _webupdate()
 {
