@@ -63,7 +63,7 @@ function create_subsessions {
 
 function create_mainsession {
     # Create main tmux session
-    tmux -2 new-session -d -s $SESSION
+    tmux -2 new-session -d -s $SESSION -x "$(tput cols)" -y "$(tput lines)"
 
     # Rename main window
     tmux rename-window -t $SESSION:0 'master'
