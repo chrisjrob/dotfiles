@@ -9,6 +9,7 @@
 \usepackage{eurosym}
 \usepackage[usenames, dvipsnames]{color}
 \usepackage{enumitem}
+\usepackage{pdfpages}
 \setenumerate{itemsep=2pt,topsep=2pt}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{%
@@ -77,7 +78,8 @@ $endif$
 % Scale images if necessary, so that they will not overflow the page
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% commented out as it conflicts with pdfpages
+% \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
 % Editor comments
 \newcommand{\editor}[1]{\footnotesize{}\emph{Edit: #1}\normalsize}
