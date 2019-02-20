@@ -65,14 +65,29 @@ $endif$
 \def\maketitle{%
   \begin{centering}
     \vskip 0.2cm
+    $if(toc)$
+    {
+        \vskip 1cm
+    }
+    $endif$
     {\LARGE \@title\par}%
     %{\normalsize \@author\par}%
+    $if(toc)$
+    {
+        \vskip 1cm
+    }
+    $endif$
     {\large \@author\par}%
+    $if(toc)$
+    {
+        \vskip 1cm
+    }
+    $endif$
     \normalfont
     {\normalsize \@date\par}%
     \vskip 0.5cm
-	\end{centering}%
-  }
+  \end{centering}%
+}
 \makeatother
 % Scale images if necessary, so that they will not overflow the page
 % margins by default, and it is still possible to overwrite the defaults
