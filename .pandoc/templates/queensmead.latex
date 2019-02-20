@@ -213,7 +213,9 @@ $if(toc)$
 {
 \hypersetup{linkcolor=blue}
 \setcounter{tocdepth}{$toc-depth$}
+\newpage
 \tableofcontents
+\newpage
 }
 $endif$
 $if(lot)$
