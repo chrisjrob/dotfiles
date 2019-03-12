@@ -44,7 +44,7 @@ done
 echo ""
 
 echo "Ejecting..."
-gvfs-mount --eject "file:///media/$USER/SAMSUNG"
+gio mount --eject "file:///media/$USER/SAMSUNG"
 
 TESTMOUNT=$(mount | grep SAMSUNG | wc -l)
 if [ $TESTMOUNT == 1 ]; then
