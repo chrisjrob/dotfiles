@@ -95,7 +95,7 @@ $endif$
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 % commented out as it conflicts with pdfpages
-% \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
 % Editor comments
 \newcommand{\editor}[1]{\footnotesize{}\emph{Edit: #1}\normalsize}
