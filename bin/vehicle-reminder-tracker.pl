@@ -18,11 +18,16 @@ if ($count != 2) {
 
 # Load CSV files into hash refs
 # with registration number as key
-my $file0_ref = load_file_from_csv( $ARGV[0] );
-my $file1_ref = load_file_from_csv( $ARGV[1] );
+my @files = sort @ARGV;
+my $file0_ref = load_file_from_csv( $files[0] );
+my $file1_ref = load_file_from_csv( $files[1] );
 
 # Build unique list of registration numbers from both files
 my @vehicles  = list_of_vehicles( $file0_ref, $file1_ref );
+
+# Add vehicle count to logfile
+$count = @vehicles;
+logger("$count unique vehicles identified");
 
 my $vehicles_ref;
 foreach my $vehicle (sort @vehicles) {
@@ -74,7 +79,12 @@ foreach my $vehicle (sort @vehicles) {
             $vehicles_ref->{ $vehicle }{'Comment'} .= 'MOT Reminder';
         }
 
+        logger("$vehicle: " . $vehicles_ref->{ $vehicle }{'Comment'});
+
     }
+
+    use Data::Dumper;
+    logger( Dumper( $vehicles_ref ) );
 
     # List of keys
     my @keys = (
@@ -94,13 +104,12 @@ foreach my $vehicle (sort @vehicles) {
     my $out_ref = convert_hash_to_array( $vehicles_ref, \@keys );
 
     # Write out array of hashes
+    logger("Writing outfile.csv");
     csv( in => $out_ref, out => 'outfile.csv', headers => \@keys );
-
-    #use Data::Dumper;
-    #print Dumper( $out_ref );
 
 }
 
+logger("Program has completed normally.");
 
 exit;
 
@@ -181,9 +190,39 @@ sub list_of_vehicles {
 sub load_file_from_csv {
     my $filename = shift;
 
+    if (not -e $filename) {
+        logger("File $filename does not exist", 'die');
+    } else {
+        logger("Loading $filename into memory");
+    }
+
     use Text::CSV_XS 'csv';
 
     my $data_ref = csv(in => $filename, key => 'Registration Number', headers => 'auto');
 
     return $data_ref;
 }
+
+# Simple logfile
+#
+sub logger {
+    my ($status, $action) = @_;
+
+    my $filename = 'logfile.txt';
+    open(LOGGER, '>>', $filename ) or die "Cannot write to $filename: $!";
+
+    print LOGGER "$status\n";
+
+    if ( (defined $action) and ($action eq 'die') ) {
+        print LOGGER "I'm dying\n";
+    }
+
+    close(LOGGER) or die "Cannot close $filename: $!";
+
+    if ( (defined $action) and ($action eq 'die') ) {
+        die "$status: $!";
+    }
+
+    return;
+}
+
