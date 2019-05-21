@@ -1,4 +1,9 @@
+$if(tasks)$
+\documentclass[twocolumn,12pt,a4paper]{article}
+$else$
 \documentclass[11pt,a4paper]{article}
+$endif$
+
 \pagestyle{plain}
 \usepackage[british]{babel}
 \usepackage[en-GB]{datetime2}
@@ -39,6 +44,12 @@ $endif$
 
 $if(listings)$
 \usepackage{listings}
+$endif$
+
+$if(tasks)$
+\usepackage[ampersand]{easylist}
+\ListProperties(Space=0mm,
+                Space*=0mm)
 $endif$
 
 $if(lhs)$
