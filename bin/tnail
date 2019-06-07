@@ -1,0 +1,40 @@
+#! /usr/bin/perl
+
+use warnings;
+use strict;
+use URI::Escape;
+
+# tnail
+# take a list of files and output html
+
+my $path = '/images';
+
+while (<>) {
+    chomp;
+    my $file = "$path/$_";
+
+    my $link = $file;
+    $link =~ s/-400x300//;
+
+    my $title = $link;
+    $title =~ s/^.*\///;
+    $title =~ s/\.jpg//;
+    $title =~ s/[-_]/ /g;
+    $title =~ s/([\w']+)/\u\L$1/g;
+
+    my $ttl = uri_escape($title);
+
+    my $html = <<"HTML";
+<figure class="thumbnail">
+    <a href="/viewimage?image=$link&title=$ttl" title="$title"><img src="$file" alt="$title"></a>
+    <figcaption>$title</figcaption>
+</figure>
+
+HTML
+
+    print $html;
+
+}
+
+
+
