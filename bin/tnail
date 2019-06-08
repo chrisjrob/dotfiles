@@ -9,24 +9,19 @@ use URI::Escape;
 
 while (<>) {
     chomp;
-    my $file = $_;
-    $file =~ s/public//;
 
-    my $link = $file;
-    $link =~ s/-\d{3,4}x\d{3,4}//;
+    my $file  = $_;
 
-    my $title = $link;
-    $title =~ s/^.*\///;
-    $title =~ s/\.jpg//;
-    $title =~ s/\d{4}-\d{2}-\d{2}-//;
-    $title =~ s/[-_]/ /g;
-    $title =~ s/([\w']+)/\u\L$1/g;
+    my $src   = $file;
+    $src =~ s/public//;
 
-    my $ttl = uri_escape($title);
+    my $link  = guess_link_from( $src );
+    my $title = get_title_for( $link );
+    my $ttl   = uri_escape( $title );
 
     my $html = <<"HTML";
 <figure class="thumbnail">
-    <a href="/viewimage?image=$link&title=$ttl" title="$title"><img src="$file" alt="$title"></a>
+    <a href="/viewimage?image=$link&title=$ttl" title="$title"><img src="$src" alt="$title"></a>
     <figcaption>$title</figcaption>
 </figure>
 
@@ -36,5 +31,71 @@ HTML
 
 }
 
+exit;
 
+# Assume that removing the geometry e.g. -200x150 will reveal 
+# the full size image for linking
+#
+sub guess_link_from {
+    my $link = shift;
+
+    $link =~ s/-\d{3,4}x\d{3,4}//;
+
+    return $link;
+}
+
+# Try getting title from exif
+# but if unavailable cobble from the filename
+#
+sub get_title_for {
+    my $file  = shift;
+
+    my $title = get_title_from_exif_for( $file );
+    if (defined $title) {
+        return $title;
+    }
+
+    $title = make_title_from_filename( $file );
+    return $title; 
+}
+
+# Get the title from exif tags
+#
+sub get_title_from_exif_for {
+    my $file = shift;
+
+    return unless -e $file;
+
+    # To discover new tags in an image type
+    # exiftool <filename>
+    # list in order of preference
+    #
+    my @tags = qw( Title Description XPTitle ImageDescription XPComment Caption-Abstract );
+
+    use Image::ExifTool qw(:Public);
+    my $exif = ImageInfo($file, @tags);
+    
+    # Go through each tag and use the first available
+    foreach my $tag (@tags) {
+        if (defined $exif->{ $tag }) {
+            return $exif->{ $tag };
+        }
+    }
+
+    return;
+}
+
+# Cobble title from filename
+#
+sub make_title_from_filename {
+    my $title  = shift;
+
+    $title =~ s/^.*\///;
+    $title =~ s/\.jpg//;
+    $title =~ s/\d{4}-\d{2}-\d{2}-//;
+    $title =~ s/[-_]/ /g;
+    $title =~ s/([\w']+)/\u\L$1/g;
+
+    return $title;
+}
 
