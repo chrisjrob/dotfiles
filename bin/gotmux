@@ -145,26 +145,26 @@ function attach_mainsession {
 
 function perl_dancer {
     # Select top left pane
-    tmux select-window -t "$TOPLEFT:0"
-    tmux select-pane -t "$TOPLEFT:0.0"
+    tmux select-window -t "$TOPRIGHT:0"
+    tmux select-pane -t "$TOPRIGHT:0.0"
 
     # Set current directory
     cd $DIR
 
     # Create new window
-    tmux new-window -t $TOPLEFT -n "${NAME}-perl" -c $DIR
+    tmux new-window -t $TOPRIGHT -n "${NAME}-perl" -c $DIR
 
     # Run website
-    tmux send-keys -t "$TOPLEFT:${NAME}-perl" 'perl bin/app-devel.pl' C-m
+    tmux send-keys -t "$TOPRIGHT:${NAME}-perl" 'perl bin/app-devel.pl' C-m
 
     # Create new editing windows
-    tmux new-window -t $TOPLEFT -n "${NAME}-1" -c $DIR
-    tmux new-window -t $TOPLEFT -n "${NAME}-2" -c $DIR
+    tmux new-window -t $TOPRIGHT -n "${NAME}-1" -c $DIR
+    tmux new-window -t $TOPRIGHT -n "${NAME}-2" -c $DIR
 
     # Select tw-1 as current window
-    tmux select-window -t "$TOPLEFT:${NAME}-1"
-    tmux send-keys -t "$TOPLEFT:${NAME}-1" "export PATH=\"$PATH:$DIR\"" C-m
-    tmux send-keys -t "$TOPLEFT:${NAME}-1" 'clear && git pull' C-m
+    tmux select-window -t "$TOPRIGHT:${NAME}-1"
+    tmux send-keys -t "$TOPRIGHT:${NAME}-1" "export PATH=\"$PATH:$DIR\"" C-m
+    tmux send-keys -t "$TOPRIGHT:${NAME}-1" 'clear && git pull' C-m
 }
 
 ####################################################
@@ -175,26 +175,26 @@ function perl_dancer {
 
 function perl_dancer_new {
     # Select top left pane
-    tmux select-window -t "$TOPLEFT:0"
-    tmux select-pane -t "$TOPLEFT:0.0"
+    tmux select-window -t "$TOPRIGHT:0"
+    tmux select-pane -t "$TOPRIGHT:0.0"
 
     # Set current directory
     cd $DIR
 
     # Create new window
-    tmux new-window -t $TOPLEFT -n "${NAME}-plackup" -c $DIR
+    tmux new-window -t $TOPRIGHT -n "${NAME}-plackup" -c $DIR
 
     # Run website
-    tmux send-keys -t "$TOPLEFT:${NAME}-plackup" '/usr/bin/perl /usr/bin/plackup -r bin/app.psgi -R config.yml -R lib/' C-m
+    tmux send-keys -t "$TOPRIGHT:${NAME}-plackup" '/usr/bin/perl /usr/bin/plackup -r bin/app.psgi -R config.yml -R lib/' C-m
 
     # Create new editing windows
-    tmux new-window -t $TOPLEFT -n "${NAME}-1" -c $DIR
-    tmux new-window -t $TOPLEFT -n "${NAME}-2" -c $DIR
+    tmux new-window -t $TOPRIGHT -n "${NAME}-1" -c $DIR
+    tmux new-window -t $TOPRIGHT -n "${NAME}-2" -c $DIR
 
     # Select tw-1 as current window
-    tmux select-window -t "$TOPLEFT:${NAME}-1"
-    tmux send-keys -t "$TOPLEFT:${NAME}-1" "export PATH=\"$PATH:$DIR\"" C-m
-    tmux send-keys -t "$TOPLEFT:${NAME}-1" 'clear && git pull' C-m
+    tmux select-window -t "$TOPRIGHT:${NAME}-1"
+    tmux send-keys -t "$TOPRIGHT:${NAME}-1" "export PATH=\"$PATH:$DIR\"" C-m
+    tmux send-keys -t "$TOPRIGHT:${NAME}-1" 'clear && git pull' C-m
 }
 
 ####################################################
@@ -214,14 +214,14 @@ function kill_dancer {
 
     if [ "$CMD" = "perl bin/app-devel.pl" ]; then
         kill $PID
-        tmux select-window -t "$TOPLEFT:0"
-        tmux select-pane -t "$TOPLEFT:0.0"
-        tmux kill-window -a -t "$TOPLEFT:0.0"
+        tmux select-window -t "$TOPRIGHT:0"
+        tmux select-pane -t "$TOPRIGHT:0.0"
+        tmux kill-window -a -t "$TOPRIGHT:0.0"
     elif [ "$CMD" = "/usr/bin/perl /usr/bin/plackup -r bin/app.psgi -R config.yml -R lib/" ]; then
         kill $PID
-        tmux select-window -t "$TOPLEFT:0"
-        tmux select-pane -t "$TOPLEFT:0.0"
-        tmux kill-window -a -t "$TOPLEFT:0.0"
+        tmux select-window -t "$TOPRIGHT:0"
+        tmux select-pane -t "$TOPRIGHT:0.0"
+        tmux kill-window -a -t "$TOPRIGHT:0.0"
     fi
 
     return
