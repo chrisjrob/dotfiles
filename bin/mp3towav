@@ -5,7 +5,11 @@
 # WAV PCM 16bits 8kHz mono
 # Suitable for Asterisk
 
-IN="$1"
-OUT=$( echo "$IN" | sed s/\.mp3/.wav/)
+for IN in "$@"
+do
+    echo "Converting $IN to WAV PCM 16bits 8kHz mono"
+    OUT=$( echo "$IN" | sed s/\.mp3/.wav/)
+    ffmpeg -i "$IN" -ac 1 -ar 8000 -acodec pcm_s16le "$OUT"
+done
 
-ffmpeg -i "$IN" -ac 1 -ar 8000 -acodec pcm_s16le "$OUT"
+
