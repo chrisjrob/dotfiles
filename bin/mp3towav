@@ -1,0 +1,11 @@
+#!/bin/bash
+# mp3towav
+#
+# Converts media files to 
+# WAV PCM 16bits 8kHz mono
+# Suitable for Asterisk
+
+IN="$1"
+OUT=$( echo "$IN" | sed s/\.mp3/.wav/)
+
+ffmpeg -i "$IN" -ac 1 -ar 8000 -acodec pcm_s16le "$OUT"
