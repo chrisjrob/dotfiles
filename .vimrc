@@ -31,7 +31,8 @@ set nocompatible
 if has("autocmd")
     filetype plugin indent on
 endif
-au BufNewFile,BufRead *.tt set filetype=html
+autocmd BufNewFile,BufRead *.tt set filetype=html
+autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
 
 let g:vim_markdown_initial_foldlevel=20
 let g:table_mode_corner_corner="|"
