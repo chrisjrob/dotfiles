@@ -50,8 +50,10 @@ TESTMOUNT=$(mount | grep SAMSUNG | wc -l)
 if [ $TESTMOUNT == 1 ]; then
     mount
     echo
+    date
     echo "WARNING: Drive still mounted do not remove!"
 else
+    date
     echo "Unmounted drive - safe to remove."
 fi
 
