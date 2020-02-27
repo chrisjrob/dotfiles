@@ -94,7 +94,7 @@ let @c = 'cc\marginpar{Complete}'
 let @d = '|A \tiny{(' . strftime("%b-%y") . ')}'
 
 " fix smart characters: –‘’“”
-let @f = ':%s:[\xa0]: :ge | %s:[u2013]:-:ge | %s:[u2018u2019]:u0027:ge | %s:[u201cu201d]:u0022:ge'
+let @f = ':%s:[\xa0]: :ge | %s:[u2013]:-:ge | %s:[u2020]:\&dagger;:ge | %s:[u2018u2019]:u0027:ge | %s:[u201cu201d]:u0022:ge'
 
 " Date stamp
 let @i = '|A' . strftime("%e %B %Y") . ''
