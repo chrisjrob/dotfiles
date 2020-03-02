@@ -26,6 +26,14 @@ command! W w
 command! RandomLine execute 'normal! '.(system('sh -c "echo -n $RANDOM"') % line('$')).'G'
 command! FormatJSON %!python -m json.tool
 
+" Windows clipboard
+if system('uname -r') =~ "Microsoft"
+    augroup Yank
+        autocmd!
+        autocmd! TextYankPost * :call system('clip.exe ',@")
+    augroup END
+endif
+
 " Vim Markdown Support with Folding
 set nocompatible
 if has("autocmd")
