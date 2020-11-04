@@ -59,6 +59,11 @@ for d in glob('~/.vim/spell/*.add', 1, 1)
     endif
 endfor
 
+"Folding with Regex https://vim.fandom.com/wiki/Folding_with_Regular_Expression
+"nnoremap \z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
+"nnoremap \z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:1 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
+nnoremap \z :setlocal foldexpr=getline(v:lnum)!~@/ foldmethod=expr foldlevel=0<CR>:noh<CR>
+
 "Twiddle case
 function! TwiddleCase(str)
     if a:str ==# toupper(a:str)
