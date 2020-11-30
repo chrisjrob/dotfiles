@@ -29,7 +29,7 @@ function create_subsessions {
     tmux send-keys '@s' C-m
     tmux send-keys 'gg/Today' C-m
     tmux send-keys ':noh' C-m
-    tmux send-keys ':set sw=2 ts=2 sts=2' C-m
+    tmux send-keys ':set sw=2 ts=2 sts=2 foldmethod=indent foldlevel=1' C-m
     tmux send-keys 'z' C-m
 
     # Create top-left session and embed in top-left window
