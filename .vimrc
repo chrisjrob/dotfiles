@@ -138,3 +138,4 @@ let @u = 'yypV:s/./-/g:noh'
 " git@github.com:vim-scripts/loremipsum.git
 " git@github.com:vim-scripts/openscad.vim.git
 " git@github.com:vimwiki/vimwiki.git
+" git@github.com:mattn/calendar-vim
