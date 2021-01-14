@@ -48,7 +48,7 @@ let g:vim_markdown_initial_foldlevel=20
 let g:table_mode_corner_corner="|"
 let g:table_mode_corner="|"
 
-let g:vimwiki_list = [{'path': "$HOME/Dropbox/Global/wiki", 'template_path': "$HOME/Dropbox/Global/wiki/templates", 'template_default': 'default', 'syntax': 'markdown', 'ext': '.md', 'path_html': "$HOME/Dropbox/Global/wiki_html", 'custom_wiki2html': 'vimwiki_markdown', 'template_ext': '.tpl'}]
+let g:vimwiki_list = [{'path': "$HOME/Dropbox/Global/wiki", 'template_path': "$HOME/Dropbox/Global/wiki/templates", 'template_default': 'default', 'syntax': 'markdown', 'ext': '.md', 'path_html': "$HOME/Dropbox/Global/wiki_html", 'custom_wiki2html': 'vimwiki_markdown', 'template_ext': '.tpl', 'auto_diary_index': 1}]
 let g:vimwiki_table_mappings=0
 let g:vimwiki_table_auto_fmt=0
 
