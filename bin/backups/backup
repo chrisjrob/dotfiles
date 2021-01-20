@@ -11,6 +11,7 @@ echo
 echo "Waiting 10 seconds..."
 echo ""
 sleep 10
+date
 
 TESTMOUNT=$(mount | grep SAMSUNG | wc -l)
 if [ $TESTMOUNT != 1 ]; then

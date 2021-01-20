@@ -21,7 +21,7 @@ my $delimiter = substr($regex,1,1);
 my @regex = split(/$delimiter/, $regex);
 
 my $regex_elements = @regex;
-if ($regex_elements < 3) {
+if ($regex_elements < 2) {
     die "Regex must be in format s/something/else/";
 } elsif ($regex_elements > 3) {
     die "Regex cannot currently have any switches";
