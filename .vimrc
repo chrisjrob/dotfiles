@@ -48,9 +48,12 @@ let g:vim_markdown_initial_foldlevel=20
 let g:table_mode_corner_corner="|"
 let g:table_mode_corner="|"
 
-let g:vimwiki_list = [{'path': "$HOME/Dropbox/Global/wiki", 'template_path': "$HOME/Dropbox/Global/wiki/templates", 'template_default': 'default', 'syntax': 'markdown', 'ext': '.md', 'path_html': "$HOME/Dropbox/Global/wiki_html", 'custom_wiki2html': 'vimwiki_markdown', 'template_ext': '.tpl'}]
+let g:vimwiki_list = [{'path': "$HOME/Dropbox/Global/wiki", 'template_path': "$HOME/Dropbox/Global/wiki/templates", 'template_default': 'default', 'syntax': 'markdown', 'ext': '.md', 'path_html': "$HOME/Dropbox/Global/wiki_html", 'custom_wiki2html': 'vimwiki_markdown', 'template_ext': '.tpl', 'auto_diary_index': 1, 'auto_generate_links': 1}]
 let g:vimwiki_table_mappings=0
 let g:vimwiki_table_auto_fmt=0
+
+" Temporary fix as auto_diary_index not working
+autocmd BufEnter diary.md :VimwikiDiaryGenerateLinks
 
 "Rebuild Spell files
 for d in glob('~/.vim/spell/*.add', 1, 1)
@@ -58,6 +61,11 @@ for d in glob('~/.vim/spell/*.add', 1, 1)
         exec 'mkspell! ' . fnameescape(d)
     endif
 endfor
+
+"Folding with Regex https://vim.fandom.com/wiki/Folding_with_Regular_Expression
+"nnoremap \z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
+"nnoremap \z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:1 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
+nnoremap \z :setlocal foldexpr=getline(v:lnum)!~@/ foldmethod=expr foldlevel=0<CR>:noh<CR>
 
 "Twiddle case
 function! TwiddleCase(str)
@@ -133,3 +141,4 @@ let @u = 'yypV:s/./-/g:noh'
 " git@github.com:vim-scripts/loremipsum.git
 " git@github.com:vim-scripts/openscad.vim.git
 " git@github.com:vimwiki/vimwiki.git
+" git@github.com:mattn/calendar-vim

@@ -23,12 +23,11 @@ function create_subsessions {
     tmux send-keys 'vim' C-m
     tmux send-keys '\ww'
     tmux send-keys ':VimwikiGoto Tasks' C-m
-    tmux send-keys ':set nospell' C-m
-    tmux send-keys ':set nowrap' C-m
     tmux send-keys '@l' C-m
     tmux send-keys '@s' C-m
     tmux send-keys 'gg/Today' C-m
     tmux send-keys ':noh' C-m
+    tmux send-keys ':set sw=2 ts=2 sts=2 foldmethod=indent foldlevel=1 nowrap nospell' C-m
     tmux send-keys 'z' C-m
 
     # Create top-left session and embed in top-left window
