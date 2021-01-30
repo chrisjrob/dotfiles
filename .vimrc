@@ -2,7 +2,6 @@ setlocal foldmethod=syntax
 :color slate
 call pathogen#infect()
 
-let g:tex_fold_enabled=1
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
 set ignorecase          " Do case insensitive matching
@@ -41,16 +40,22 @@ set nocompatible
 if has("autocmd")
     filetype plugin indent on
 endif
-autocmd BufNewFile,BufRead *.tt set filetype=html
+autocmd BufNewFile,BufFilePre,BufRead *.tt set filetype=html
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
 
-let g:vim_markdown_initial_foldlevel=20
+let g:tex_fold_enabled=1
+let g:markdown_folding=1
+let g:vim_markdown_folding_level=2
 let g:table_mode_corner_corner="|"
 let g:table_mode_corner="|"
 
 let g:vimwiki_list = [{'path': "$HOME/Dropbox/Global/wiki", 'template_path': "$HOME/Dropbox/Global/wiki/templates", 'template_default': 'default', 'syntax': 'markdown', 'ext': '.md', 'path_html': "$HOME/Dropbox/Global/wiki_html", 'custom_wiki2html': 'vimwiki_markdown', 'template_ext': '.tpl', 'auto_diary_index': 1, 'auto_generate_links': 1}]
 let g:vimwiki_table_mappings=0
 let g:vimwiki_table_auto_fmt=0
+
+" Stop *.md files behaving as vimwiki outside of vimwiki paths
+let g:vimwiki_global_ext=0
 
 " Temporary fix as auto_diary_index not working
 autocmd BufEnter diary.md :VimwikiDiaryGenerateLinks
