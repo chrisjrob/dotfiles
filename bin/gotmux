@@ -43,7 +43,7 @@ function create_subsessions {
     tmux rename-window -t $BOTTOMLEFT:0 'bl'
 
     # Run ssh
-    tmux send-keys 'ssh trigarbit' C-m
+    tmux send-keys 'ssh trigarbit2' C-m
     sleep 2
     tmux send-keys 'tmux attach -d' C-m
 
