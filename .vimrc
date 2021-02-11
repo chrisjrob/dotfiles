@@ -73,7 +73,7 @@ endfor
 nnoremap \z :setlocal foldexpr=getline(v:lnum)!~@/ foldmethod=expr foldlevel=0<CR>:noh<CR>
 
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-vnoremap <Space> zf
+vnoremap <Space> za
 
 "Twiddle case
 function! TwiddleCase(str)
