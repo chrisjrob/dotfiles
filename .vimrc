@@ -72,6 +72,9 @@ endfor
 "nnoremap \z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:1 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
 nnoremap \z :setlocal foldexpr=getline(v:lnum)!~@/ foldmethod=expr foldlevel=0<CR>:noh<CR>
 
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
+
 "Twiddle case
 function! TwiddleCase(str)
     if a:str ==# toupper(a:str)
