@@ -44,6 +44,8 @@ autocmd BufNewFile,BufFilePre,BufRead *.tt set filetype=html
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
 
+au! FileType css,scss setl iskeyword+=-
+
 let g:tex_fold_enabled=1
 let g:markdown_folding=1
 let g:vim_markdown_folding_level=2
