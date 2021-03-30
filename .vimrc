@@ -106,6 +106,10 @@ set undodir=$HOME/.vim/undo " where to save undo histories
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
 
+" Abbreviations
+
+iabbrev teh the
+
 " Shortcut for clear search
 nmap <silent> ./ :nohlsearch<CR>
 
