@@ -112,6 +112,11 @@ iabbrev teh the
 iabbrev <expr> ddd strftime('%e %B %Y')
 iabbrev <expr> iso strftime('%F %T')
 
+iabbrev <expr> pwd expand('%:p:h')
+iabbrev <expr> pname expand('%:p')
+iabbrev <expr> fname expand('%:t')
+iabbrev <expr> bname expand('%:r')
+
 " Shortcut for clear search
 nmap <silent> ./ :nohlsearch<CR>
 
