@@ -109,6 +109,8 @@ set undoreload=10000        " number of lines to save for undo
 " Abbreviations
 
 iabbrev teh the
+iabbrev <expr> ddd strftime('%e %B %Y')
+iabbrev <expr> iso strftime('%F %T')
 
 " Shortcut for clear search
 nmap <silent> ./ :nohlsearch<CR>

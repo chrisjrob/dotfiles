@@ -35,14 +35,14 @@ echo "Starting local backup..."
 /usr/bin/rdiff-backup --print-statistics --include-globbing-filelist $INCLUDES/asusi5-include-list / $DRIVE/rdiff-backup/asusi5
 echo ""
  
-# echo "Starting purge of old backups..."
-# ALLBACKUPS="$BACKUPS asusi5"
-# for SRC in $ALLBACKUPS;do
-#     sleep 5
-#     echo "Purging $SRC backup..."
-#     /usr/bin/rdiff-backup --force --remove-older-than $RETENTION $DRIVE/rdiff-backup/$SRC
-# done
-# echo ""
+echo "Starting purge of old backups..."
+ALLBACKUPS="$BACKUPS asusi5"
+for SRC in $ALLBACKUPS;do
+    sleep 5
+    echo "Purging $SRC backup..."
+    /usr/bin/rdiff-backup --force --remove-older-than $RETENTION $DRIVE/rdiff-backup/$SRC
+done
+echo ""
 
 echo "Ejecting..."
 gio mount --eject "file:///media/$USER/SAMSUNG"
