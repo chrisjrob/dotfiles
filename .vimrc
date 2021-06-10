@@ -48,7 +48,7 @@ au! FileType css,scss setl iskeyword+=-
 
 let g:tex_fold_enabled=1
 let g:markdown_folding=1
-let g:vim_markdown_folding_level=2
+let g:vim_markdown_folding_level=1
 let g:table_mode_corner_corner="|"
 let g:table_mode_corner="|"
 
