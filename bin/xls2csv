@@ -1,0 +1,78 @@
+#!/usr/bin/perl
+#
+# xls2csv
+#
+# Convert XLS to CSV
+#
+
+use strict;
+use warnings;
+use JSON;
+use Text::CSV;
+use File::Slurp qw( read_file write_file );
+
+use vars qw( $CONFIG );
+my $CONFIG = {
+};
+
+use Getopt::Long;
+my $xls2csv;
+my $file = '';
+
+GetOptions (
+    "file=s"                => \$file,
+    "xls2csv"               => \$xls2csv,
+) or die "Error in arguments\n";
+
+if ( ($xls2csv) and ($file) and (-e $file) ) {
+    convert_xls_to_csv( $file );
+
+} else {
+    # Do nothing
+}
+
+exit;
+
+# Convert XLS to CSV
+#
+sub convert_xls_to_csv {
+    my $infile = shift;
+
+    my $outfile = $infile;
+    $outfile =~ s/\.XLS/.csv/i;
+
+    print "Converting $infile to $outfile\n";
+
+    use Spreadsheet::ParseExcel;
+    my $xlsparser = Spreadsheet::ParseExcel->new();
+    my $xlsbook = $xlsparser->parse( $infile );
+    my $xls = $xlsbook->worksheet(0);
+    my ( $row_first, $row_last ) = $xls->row_range();
+    my ( $col_first, $col_last ) = $xls->col_range();
+    
+    my $csv = Text::CSV->new({ binary => 1 });
+    open( my $fh_csv, '>', $outfile ) or die "Cannot write to $outfile: $!";
+
+    for my $row ( $row_first .. $row_last ) {
+        my @cols = ();
+        for my $col ( $col_first .. $col_last ) {
+            my $cell = $xls->get_cell( $row, $col );
+
+            my $cellcontents;
+            if ( $cell ) {
+                $cellcontents = $cell->unformatted();
+            } else {
+                $cellcontents = '';
+            }
+
+            push(@cols, $cellcontents);
+        }
+        my $status = $csv->combine( @cols );
+        my $csvline = $csv->string;
+        print $fh_csv $csvline, "\n";
+    }
+
+    close( $fh_csv ) or die "Cannot close $outfile: $!";
+
+    return $outfile;
+}
