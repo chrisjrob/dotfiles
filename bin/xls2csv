@@ -7,24 +7,17 @@
 
 use strict;
 use warnings;
-use JSON;
 use Text::CSV;
 use File::Slurp qw( read_file write_file );
 
-use vars qw( $CONFIG );
-my $CONFIG = {
-};
-
 use Getopt::Long;
-my $xls2csv;
 my $file = '';
 
 GetOptions (
     "file=s"                => \$file,
-    "xls2csv"               => \$xls2csv,
 ) or die "Error in arguments\n";
 
-if ( ($xls2csv) and ($file) and (-e $file) ) {
+if ( ($file) and (-e $file) ) {
     convert_xls_to_csv( $file );
 
 } else {
